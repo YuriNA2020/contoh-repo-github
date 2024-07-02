@@ -1,0 +1,80 @@
+<%- include('partials/header.ejs') %>
+
+<style>
+.btn-outline-warning.active {
+    background-color: yellow;
+    border-color: yellow;
+    color: black;
+} 
+</style>
+
+<h1>This page is used to access the <%= userInfo.name %> in Terrace</h1>
+
+<% lamps.forEach(function(lamp) { %>
+    <div>
+        <h3><%= lamp.name %></h3>
+        <button id="switchButton<%= lamp.id %>" class="btn btn-outline-warning" onclick="toggleSwitch(<%= lamp.id %>)">Switch Off</button>
+        <form id="timerForm<%= lamp.id %>" onsubmit="setTimer(event, <%= lamp.id %>)">
+            <label for="onTime<%= lamp.id %>">On Time:</label>
+            <input type="time" id="onTime<%= lamp.id %>" name="onTime">
+            <label for="offTime<%= lamp.id %>">Off Time:</label>
+            <input type="time" id="offTime<%= lamp.id %>" name="offTime">
+            <button type="submit">Set Timer</button>
+        </form>
+    </div>
+<% }); %>
+
+<script>
+    function toggleSwitch(lampId) {
+        var button = document.getElementById("switchButton" + lampId);
+        if (button.classList.contains("active")) {
+            button.classList.remove("active");
+            button.innerText = "Switch Off";
+        } else {
+            button.classList.add("active");
+            button.innerText = "Switch On";
+        }
+    }
+
+    function setTimer(event, lampId) {
+        event.preventDefault();
+        var onTime = document.getElementById("onTime" + lampId).value;
+        var offTime = document.getElementById("offTime" + lampId).value;
+        fetch(`/setTimer/${lampId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ onTime, offTime })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Timer set successfully!");
+            } else {
+                alert("Failed to set timer.");
+            }
+        });
+    }
+
+    function checkTimers() {
+        fetch('/checkTimers')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(lamp => {
+                    var button = document.getElementById("switchButton" + lamp.id);
+                    if (lamp.state === "on") {
+                        button.classList.add("active");
+                        button.innerText = "Switch On";
+                    } else {
+                        button.classList.remove("active");
+                        button.innerText = "Switch Off";
+                    }
+                });
+            });
+    }
+
+    setInterval(checkTimers, 1000); // Check timers every second    
+</script>
+
+<%- include('partials/footer.ejs') %>

@@ -1,0 +1,22 @@
+{
+  "name": "yossiproductions",
+  "version": "1.0.0",
+  "description": "The Official Yossi Productions Website",
+  "main": "app.js",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yossifeb",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3",
+    "request": "^2.88.2"
+  }
+}

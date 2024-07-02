@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+        <h1>This is page for biodata of users</h1>
+
+    <% for(var i = 0; i < biodata.length; i++) { %>
+        <div style="border-radius: 15px; padding: 15px; margin: 20px auto; max-width: 300px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+        <h4 style="color: #ff3b30; margin: 0 0 10px;">Nama: <%= biodata[i].name %></h4>
+        <h5 style="color: #007aff; margin: 0;">Usia: <%= biodata[i].age %></h5>
+        </div>
+        <% } %>
+
+        <div class="card" style="width: 18rem;">
+          
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"> <%= biodata[i].name %></h5>
+              <p class="card-text">Dia berusia</p>
+              <a href="#" class="btn btn-primary">More Info</a>
+            </div>
+          </div>
+
+<%- include('partials/footer') %>
